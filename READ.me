@@ -1,0 +1,135 @@
+# Projeto de Infraestrutura com Terraform + AWS CloudWatch
+
+Este repositório contém a infraestrutura como código (IaC) do projeto de pipeline de dados utilizando:
+
+* **AWS EC2** para hospedar aplicação Flask
+* **AWS S3** para armazenamento de arquivos
+* **Prefect** para orquestração do fluxo de ETL
+* **AWS CloudWatch** para coleta de logs, métricas e criação de alarmes personalizados
+* **Terraform** como ferramenta de provisionamento
+
+## Estrutura do Repositório
+
+```
+IaC/
+├── puc_iac_deploy/
+│   ├── main.tf              # Infraestrutura principal com EC2, S3 e permissões IAM
+│   ├── upload_to_s3.sh      # Script local para enviar arquivos da aplicação ao S3
+│   └── cloudwatch.tf        # Integração com AWS CloudWatch (logs e métricas)
+
+puc_app/
+├── app.py                # Aplicação Flask
+├── flow.py               # Pipeline de dados com Prefect e CloudWatch Metrics/Logs
+└── templates/
+    └── index.html
+```
+
+---
+
+## Como Executar o Projeto
+
+### 1. Clonar o repositório
+
+```bash
+git clone https://github.com/plz09/puc_infra.git
+cd puc_infra/IaC/puc_iac_deploy
+```
+
+### 2. Inicializar e aplicar com Terraform
+
+Certifique-se de que o AWS CLI está configurado com `aws configure` e que você possui permissões suficientes.
+
+```bash
+terraform init
+terraform apply -auto-approve
+```
+
+Isso irá:
+
+* Criar um bucket S3
+* Criar uma instância EC2
+* Criar regras de segurança
+* Enviar arquivos da aplicação para o S3 via `upload_to_s3.sh`
+* Executar a aplicação Flask via Gunicorn
+
+### 3. Acessar a aplicação
+
+Copie o IP público exibido na saída do Terraform e acesse via navegador:
+
+```
+http://<IP_PUBLICO>
+```
+
+---
+
+## Executar o Flow de ETL (Prefect)
+
+Acesse a instância EC2 usando EC2 Instance Connect ou SSH:
+
+```bash
+cd /puc_app
+sudo python3 flow.py
+```
+
+Esse fluxo irá:
+
+* Listar arquivos CSV no S3
+* Baixar os arquivos e transformá-los
+* Enviar logs para o **CloudWatch Logs**
+* Registrar métricas personalizadas no **CloudWatch Metrics**
+
+---
+
+## Visualizar Logs e Métricas no CloudWatch
+
+### ✉ Logs:
+
+* Navegue até **CloudWatch > Logs > Grupos de logs > /puc/etl**
+
+### ⌚ Métricas:
+
+* **CloudWatch > Métricas > PUC/ETL**
+
+  * `ArquivosProcessados`
+  * `DuracaoPipeline`
+
+### ⚠ Alarmes (opcional):
+
+* Você pode criar alarmes com base nessas métricas.
+* Ex: notificar se a duração do pipeline exceder X segundos
+
+---
+
+## Permissões IAM utilizadas
+
+A instância EC2 tem um perfil com as seguintes permissões:
+
+* `s3:GetObject`, `s3:PutObject`, `s3:ListBucket`
+* `logs:CreateLogGroup`, `logs:CreateLogStream`, `logs:PutLogEvents`
+* `cloudwatch:PutMetricData`
+
+---
+
+## Requisitos
+
+* Terraform >= 1.3
+* AWS CLI configurado com credenciais válidas
+* Conta AWS na região **us-east-2 (Ohio)**
+
+---
+
+## Colaboradores
+
+* Andressa Chaves
+* \[Seu grupo aqui]
+
+---
+
+Para dúvidas ou execução do projeto por outros integrantes:
+
+* Compartilhe este repositório e siga as instruções acima
+* Certifique-se de que os arquivos de app estejam no bucket S3, ou execute manualmente `upload_to_s3.sh`
+
+---
+
+> Projeto desenvolvido para a disciplina de Big Data Analytics / Engenharia de Dados - PUC Minas
