@@ -27,4 +27,7 @@ docker run -dit --name container-iac \
 # Verificar dependências
 terraform version
 aws --version
+
+## Resultado
+![Matriz de Confusão](confusion_matrix.png)
 ```
