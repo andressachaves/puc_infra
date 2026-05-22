@@ -30,4 +30,7 @@ aws --version
 
 ## Resultado
 ![Matriz de Confusão](confusion_matrix.png)
+�PNG
+
+
 ```
