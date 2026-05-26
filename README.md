@@ -1,24 +1,34 @@
-# 🏗️ puc_infra
+# 🔍 Sistema de Detecção de Fraudes com IaC
 
-Projeto de infraestrutura como código (IaC) desenvolvido na PUC, com provisionamento de containers Docker e recursos em nuvem.
+Pipeline completo de detecção de fraudes desenvolvido na PUC Minas,
+cobrindo desde a infraestrutura em nuvem até o modelo de ML.
 
 ## 📋 Descrição
 
-Este repositório contém os arquivos de infraestrutura utilizados no projeto acadêmico da PUC, explorando conceitos de DevOps, containers e automação de ambientes.
+Este repositório contém a infraestrutura como código e o pipeline de ML do projeto acadêmico da PUC Minas, explorando conceitos de DevOps, Big Data e Machine Learning aplicados à detecção de fraudes.
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Stack
 
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![IaC](https://img.shields.io/badge/IaC-Infrastructure_as_Code-orange?style=for-the-badge)
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+
+**Infraestrutura**
+* Terraform — provisionamento IaC
+* AWS EC2 — hospedagem da aplicação Flask
+* AWS S3 — armazenamento de dados
+* AWS CloudWatch — logs, métricas e alarmes
+* Prefect — orquestração do pipeline ETL
+
+
 
 ## 📁 Estrutura do Projeto
-
-```
 puc_infra/
-├── Dockerfile          # Configuração do container
-├── IaC/                # Arquivos de Infrastructure as Code
+├── Dockerfile # Configuração do container
+├── IaC/ # Arquivos de Infrastructure as Code
 └── README.md
-```
+
 
 ## 🚀 Como Usar
 
@@ -40,13 +50,5 @@ docker build -t puc_infra .
 
 # Execute o container
 docker run puc_infra
-```
 
-## 🎓 Contexto Acadêmico
-
-Projeto desenvolvido como parte da grade curricular da **PUC** na área de Infraestrutura e DevOps.
-
-## 👩‍💻 Autora
-
-**Andressa Chaves**  
-[![GitHub](https://img.shields.io/badge/GitHub-andressachaves-181717?style=flat&logo=github)](https://github.com/andressachaves)
+Projeto acadêmico — Big Data Analytics / Banco de Dados, PUC Minas
